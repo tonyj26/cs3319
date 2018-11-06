@@ -1,5 +1,5 @@
 USE hjiang82assign2db;
-LOAD DATA LOCAL INFILE 'loaddatafall2018.txt' INTO TABLE product FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' (ProductID, Description, CostPerItem, Quantity);
+LOAD DATA LOCAL INFILE 'loaddatafall2018.txt' INTO TABLE product FIELDS TERMINATED BY ',';
 SELECT * FROM product;
 
 INSERT INTO product (ProductID, Description, CostPerItem, Quantity) VALUES (66, "Elbow pads", 14.25, 120);
