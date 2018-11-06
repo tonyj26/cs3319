@@ -11,28 +11,37 @@ SELECT DISTINCT City FROM customer;
 SELECT * FROM agent ORDER BY City; 
 
 -- Query 4
-SELECT FirstName, LastName FROM customers WHERE City = "Springfield"; 
+SELECT customer.FirstName, customer.LastName FROM customer WHERE customer.City = "Springfield"; 
 
 -- Query 5
-SELECT LastName FROM customer WHERE AgentID IN (SELECT AgentID FROM agent WHERE FirstName = "Regis"); 
+SELECT customer.LastName FROM customer WHERE customer.AgentID IN (SELECT agent.AgentID FROM agent WHERE agent.FirstName = "Regis"); 
 
 -- Query 6
-SELECT Description FROM product WHERE Description LIKE "%[pP]ad%";  
+SELECT product.Description FROM product WHERE Description LIKE "%[pP]ad%";  
 
 -- Query 7
+SELECT customer.LastName, product.Description, purchase.Quantity FROM customer, product, purchase WHERE customer.CustomerID = purchase.CustomerID AND purhase.ProductID = product.ProductID; 
 
 -- Query 8
+SELECT SUM(Quantity) AS "Homer's Total Purchases" FROM purchase WHERE purchase.CustomerID IN (SELECT customer.CustomerID FROM customer WHERE customer.FirstName = "Homer"); 
 
 -- Query 9
+SELECT customer.FirstName, customer.LastName, SUM(purchase.Quantity) FROM purchase, customer WHERE purchase.CustomerID = customer.CustomerID GROUP BY customer.FirstName; 
 
 -- Query 10
+SELECT product.Description, product.Quantity FROM product LEFT JOIN purchase ON product.ProductID = purchase.ProductID WHERE purchase.ProductID IS NULL; 
 
 -- Query 11
+-- //Need work 
+-- SELECT product.Description, product.Quantity FROM product LEFT JOIN purchase ON product.ProductID = purchase.ProductID WHERE purchase.CustomerID IN (SELECT customer.CustomerID FROM customer WHERE customer.FirstName = "Fred" AND customer.LastName = "Flinstone") IS NULL; 
 
 -- Query 12
+SELECT agent.FirstName AS "Agent's First Name", agent.LastName AS "Agent's Last Name", customer.FirstName AS "Agent's Customer's First Name", customer.LastName AS "Agent's Customer's Last Name" FROM agent, customer WHERE customer.AgentID = agent.AgentID AND customer.City = agent.City; 
 
 -- Query 13
+SELECT SUM(purchase.Quantity) AS "Total Knee Pads Purchased" FROM purchase, product WHERE purchase.ProductID = product.ProductID AND product.Description = "Knee Pads";
 
 -- Query 14
 
 -- Query 15
+SELECT DISTINCT agent.FirstName, agent.LastName FROM agent, customer, purchase, product WHERE agent.AgentID IN (SELECT customer.AgentID FROM customer WHERE customer.CustomerID IN (SELECT purchase.CustomerID FROM purchase WHERE purchase.ProductID IN (SELECT product.ProductID FROM product WHERE product.ProductID = purchase.ProductID AND product.Description = "Knee Pads")));

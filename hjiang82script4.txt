@@ -7,22 +7,34 @@ SELECT * FROM customer;
 SELECT * FROM purchase; 
 
 -- Creating first view 
-CREATE VIEW view1 AS SELECT FirstName, LastName, Description, Quantity, CostPerItem, CostPerItem*Quantity AS TotalCost FROM customer, product, purchase WHERE product.ProductID = purchase.ProductID AND customer.CustomerID = purchase.CustomerID ORDER BY customer.LastName; 
+CREATE VIEW view1 AS SELECT customer.FirstName, customer.LastName, product.Description, purchase.Quantity, product.CostPerItem, (product.CostPerItem*purchase.Quantity) AS TotalCost FROM customer, product, purchase WHERE product.ProductID = purchase.ProductID AND customer.CustomerID = purchase.CustomerID ORDER BY customer.LastName; 
 
 -- Selecting all rows from view
 SELECT * FROM view1; 
 
 -- Selecting customer spent more than 100 
-SELECT * FROM view1 WHERE TotalCost > 100
+SELECT * FROM view1 WHERE TotalCost > 100; 
+
+-- Show all tables before deleting 
+SELECT * FROM product;
+SELECT * FROM agent; 
+SELECT * FROM customer; 
+SELECT * FROM purchase; 
 
 -- Delete my made up product 
 DELETE FROM product WHERE Description = "Baseball"; 
 
 -- Show product Table to prove deletion 
-SELECT * FROM product 
+SELECT * FROM product; 
 
 -- Further proving deletion by trying to show it 
 SELECT * FROM product WHERE Description = "Baseball"; 
+
+-- Show all tables after deletion
+SELECT * FROM product;
+SELECT * FROM agent; 
+SELECT * FROM customer; 
+SELECT * FROM purchase; 
 
 -- Delete all agents from Springfield 
 DELETE FROM agent WHERE City = "Springfield"; 

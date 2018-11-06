@@ -16,7 +16,6 @@ INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES
 INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (12, "Rosie", "Cox", "Ottawa", 0.50);
 INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (1, "Tony", "Jiang", "Toronto", 0.150);
 
-
 -- Insert data to customer table 
 -- Note assigning each customer AgentID 1 arbitrarily 
 -- Will update the AgentID and each customer must have 1 agent so all will be changed appropriately
@@ -39,7 +38,13 @@ INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (78, 31, 4);
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 31, 2);
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 15, 2);
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (78, 15, 2);
-INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 14, 19);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 14, 19);\
+
+-- Showing all the tables before updating them 
+SELECT * FROM product; 
+SELECT * FROM agent; 
+SELECT * FROM customer; 
+SELECT * FROM purchase; 
 
 -- Update data for customer table with correct AgentID
 -- using OR statements to join WHERE conditions together for agents with multiple customers 
@@ -48,7 +53,7 @@ UPDATE customer SET AgentID = 33 WHERE CustomerID = 13;
 UPDATE customer SET AgentID = 11 WHERE CustomerID = 10 OR CustomerID = 15; 
 UPDATE customer SET AgentID = 66 WHERE CustomerID = 31;
 
--- Output all the tables 
+-- Output all the tables after updating them  
 SELECT * FROM product; 
 SELECT * FROM agent; 
 SELECT * FROM customer; 
