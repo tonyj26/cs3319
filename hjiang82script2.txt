@@ -19,17 +19,17 @@ INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES
 
 -- Insert data to customer table 
 -- Note assigning each customer AgentID 1 arbitrarily 
--- Will update the AgentID and each customer must have 1 agent so all will be changed appropriately ]
+-- Will update the AgentID and each customer must have 1 agent so all will be changed appropriately
 -- Because in File1 AgentID foreign key set as NOT NULL
-INSERT INTO customer VALUES (21, "Homer", "Simpson", "Springfield", "686-8956", 1);
-INSERT INTO customer VALUES (31, "Sideshow", "Bob", "Springfield", "686-5555", 1);
-INSERT INTO customer VALUES (12, "Monty", "Burns", "Springfield", "789-0000", 1);
-INSERT INTO customer VALUES (15, "Fred", "Flinstone", "Bedrock", "777-2345", 1);
-INSERT INTO customer VALUES (13, "Super", "Man", "Kypto", "888-1234", 1);
-INSERT INTO customer VALUES (10, "Barney", "Rubble", "Bedrock", "777-1234", 1);
-INSERT INTO customer VALUES (14, "Peter", "Griffens", "Providence", "987-4567", 1);
+INSERT INTO customer VALUES (21, "Springfield", "Homer", "Simpson", "686-8956", 1);
+INSERT INTO customer VALUES (31, "Springfield", "Sideshow", "Bob", "686-5555", 1);
+INSERT INTO customer VALUES (12, "Springfield", "Monty", "Burns", "789-0000", 1);
+INSERT INTO customer VALUES (15, "Bedrock", "Fred", "Flinstone", "777-2345", 1);
+INSERT INTO customer VALUES (13, "Kypto", "Super", "Man", "888-1234", 1);
+INSERT INTO customer VALUES (10, "Bedrock", "Barney", "Rubble", "777-1234", 1);
+INSERT INTO customer VALUES (14, "Providence", "Peter", "Griffens", "987-4567", 1);
 
--- Insert data to purchase table 
+-- Insert data to purchase table
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (99, 21, 20);
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (12, 21, 14);
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 21, 10);
@@ -42,26 +42,23 @@ INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (78, 15, 2);
 INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 14, 19);
 
 -- Update data for customer table with correct AgentID
+-- using OR statements to join WHERE conditions together for agents with multiple customers 
 UPDATE customer SET AgentID = 99 WHERE CustomerID = 21 OR CustomerID = 12 OR CustomerID = 14; 
 UPDATE customer SET AgentID = 33 WHERE CustomerID = 13; 
 UPDATE customer SET AgentID = 11 WHERE CustomerID = 10 OR CustomerID = 15; 
 UPDATE customer SET AgentID = 66 WHERE CustomerID = 31;
 
+-- Output all the tables 
 SELECT * FROM product; 
 SELECT * FROM agent; 
 SELECT * FROM customer; 
 SELECT * FROM purchase; 
 
--- Update customer, purchase tables with changes 
 -- Change Super Man customer to Wonder Woman
 UPDATE customer SET FirstName = "Wonder", LastName = "Woman" WHERE FirstName = "Super" AND LastName = "Man";
 
-SELECT * FROM customer; 
-
 -- Change purchase quantity to 5 for Sideshow customer
 UPDATE purchase, customer SET purchase.Quantity = 5 WHERE purchase.CustomerID = customer.CustomerID AND customer.FirstName = "Sideshow";
-
-SELECT * FROM purchase; 
 
 -- Change customer City to Boston for customer with agent Regis
 UPDATE customer, agent SET customer.City = "Boston" WHERE customer.AgentID = agent.AgentID AND agent.FirstName = "Regis";
