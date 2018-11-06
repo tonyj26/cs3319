@@ -1,4 +1,3 @@
---Begin MySQL script
 SHOW DATABASES; 
 DROP DATABASE IF EXISTS hjiang82assign2db;
 CREATE DATABASE hjiang82assign2db;
