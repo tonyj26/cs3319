@@ -1,0 +1,33 @@
+USE hjiang82assign2db; 
+
+-- Show all data in all tables 
+SELECT * FROM product;
+SELECT * FROM agent; 
+SELECT * FROM customer; 
+SELECT * FROM purchase; 
+
+-- Creating first view 
+CREATE VIEW view1 AS SELECT FirstName, LastName, Description, Quantity, CostPerItem, CostPerItem*Quantity AS TotalCost FROM customer, product, purchase WHERE product.ProductID = purchase.ProductID AND customer.CustomerID = purchase.CustomerID ORDER BY customer.LastName; 
+
+-- Selecting all rows from view
+SELECT * FROM view1; 
+
+-- Selecting customer spent more than 100 
+SELECT * FROM view1 WHERE TotalCost > 100
+
+-- Delete my made up product 
+DELETE FROM product WHERE Description = "Baseball"; 
+
+-- Show product Table to prove deletion 
+SELECT * FROM product 
+
+-- Further proving deletion by trying to show it 
+SELECT * FROM product WHERE Description = "Baseball"; 
+
+-- Delete all agents from Springfield 
+DELETE FROM agent WHERE City = "Springfield"; 
+
+-- Note this causes error because we can't delete agents that are attached to customers 
+-- This is due to the NOT NULL we added for customer Table in File1 
+-- So Regis Philbin, Rosie Cox, Courtney Cox, David Letterman, Rosie ODonnell and Tony Jiang not deleted because not from Springfield
+-- Hugh Grant is not deleted because he is currently attached to Homer, Monty and Peter customers 

@@ -1,0 +1,38 @@
+USE hjiang82assign2db; 
+
+-- Query 1
+SELECT Description FROM product; 
+
+-- Query 2
+SELECT DISTINCT City FROM customer;
+
+-- Query 3
+-- Note that this is in ascending order not descending
+SELECT * FROM agent ORDER BY City; 
+
+-- Query 4
+SELECT FirstName, LastName FROM customers WHERE City = "Springfield"; 
+
+-- Query 5
+SELECT LastName FROM customer WHERE AgentID IN (SELECT AgentID FROM agent WHERE FirstName = "Regis"); 
+
+-- Query 6
+SELECT Description FROM product WHERE Description LIKE "%[pP]ad%";  
+
+-- Query 7
+
+-- Query 8
+
+-- Query 9
+
+-- Query 10
+
+-- Query 11
+
+-- Query 12
+
+-- Query 13
+
+-- Query 14
+
+-- Query 15
