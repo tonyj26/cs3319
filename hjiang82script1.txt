@@ -20,7 +20,7 @@ CREATE TABLE product (ProductID CHAR(2), Description VARCHAR(20), CostPerItem DE
 CREATE TABLE agent (AgentID CHAR(2), FirstName VARCHAR(30), LastName VARCHAR(30), City VARCHAR(15), CommissionPercent DECIMAL(10,10), PRIMARY KEY (AgentID)); 
 
 -- Table customer has AgentID has a foreign key from Table agent
---AgentID NOT NULL so when delete agent, if agent has any customers cannot be deleted 
+-- AgentID NOT NULL so when delete agent, if agent has any customers cannot be deleted 
 CREATE TABLE customer (CustomerID CHAR(2), City VARCHAR(15), FirstName VARCHAR(30), LastName VARCHAR(30), PhoneNumber VARCHAR(10), AgentID CHAR(2) NOT NULL, PRIMARY KEY (CustomerID), FOREIGN KEY (AgentID) REFERENCES agent(AgentID)); 
 
 -- Table purchase from M-N relationship
