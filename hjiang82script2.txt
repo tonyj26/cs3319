@@ -1,0 +1,52 @@
+USE hjiang82assign2db;
+LOAD DATA LOCAL INFILE 'loaddatafall2018.txt' INTO TABLE product FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' (ProductID, Description, CostPerItem, Quantity);
+SELECT * FROM product;
+
+INSERT INTO product (ProductID, Description, CostPerItem, Quantity) VALUES (66, "Elbow pads", 14.25, 120);
+INSERT INTO product (ProductID, Description, CostPerItem, Quantity) VALUES (15, "Baseball", 2.5, 180);
+
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (99, "Hugh", "Grant", "Springfield", 16);
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (22, "Courtney", "Cox", "New York", 25);
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (66, "Rosie", "ODonnell", "Ottawa", 100);
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (33, "David", "Letterman", "Bedrock", 100);
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (11, "Regis", "Philbin", "Boston", 33);
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (12, "Rosie", "Cox", "Ottawa", 50);
+INSERT INTO agent (AgentID, FirstName, LastName, City, CommissionPercent) VALUES (1, "Tony", "Jiang", "Toronto", 150);
+
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (21, "Homer", "Simpson", "Springfield", "686-8956");
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (31, "Sideshow", "Bob", "Springfield", "686-5555");
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (12, "Monty", "Burns", "Springfield", "789-0000");
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (15, "Fred", "Flinstone", "Bedrock", "777-2345");
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (13, "Super", "Man", "Kypto", "888-1234");
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (10, "Barney, "Rubble", "Bedrock", "777-1234");
+INSERT INTO customer (CustomerID, FirstName, LastName, City, PhoneNumber) VALUES (14, "Peter", "Griffens", "Providence", "987-4567");
+
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (99, 21, 20);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (12, 21, 14);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 21, 10);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (99, 31, 1);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (12, 31, 2);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (78, 31, 4);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 31, 2);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 15, 2);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (78, 15, 2);
+INSERT INTO purchase (ProductID, CustomerID, Quantity) VALUES (66, 14, 19);
+
+UPDATE customer SET AgentID = 99 WHERE CustomerID = 21 OR CustomerID = 12 OR CustomerID = 14; 
+UPDATE customer SET AgentID = 33 WHERE CustomerID = 13; 
+UPDATE customer SET AgentID = 11 WHERE CustomerID = 10 OR CustomerID = 15; 
+UPDATE customer SET AgentID = 66 WHERE CustomerID = 31;
+
+SELECT * FROM product; 
+SELECT * FROM agent; 
+SELECT * FROM customer; 
+SELECT * FROM purchase; 
+
+UPDATE customer SET FirstName = "Wonder", LastName = "Woman" WHERE FirstName = "Super" AND LastName = "Man";
+UPDATE purchase, customer SET purchase.Quantity = 5 WHERE purchase.CustomerID = customer.CustomerID AND customer.FirstName = "Sideshow";
+UPDATE customer, agent SET customer.City = "Boston" WHERE customer.AgentID = agent.AgentID AND agent.FirstName = "Regis";
+
+SELECT * FROM product; 
+SELECT * FROM agent; 
+SELECT * FROM customer; 
+SELECT * FROM purchase; 
