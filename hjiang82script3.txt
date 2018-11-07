@@ -17,10 +17,10 @@ SELECT customer.FirstName, customer.LastName FROM customer WHERE customer.City =
 SELECT customer.LastName FROM customer WHERE customer.AgentID IN (SELECT agent.AgentID FROM agent WHERE agent.FirstName = "Regis"); 
 
 -- Query 6
-SELECT product.Description FROM product WHERE Description LIKE "%[pP]ad%";  
+SELECT product.Description FROM product WHERE Description LIKE "%pad%" OR "%Pad%"; 
 
 -- Query 7
-SELECT customer.LastName, product.Description, purchase.Quantity FROM customer, product, purchase WHERE customer.CustomerID = purchase.CustomerID AND purhase.ProductID = product.ProductID; 
+SELECT customer.LastName, product.Description, purchase.Quantity FROM customer, product, purchase WHERE customer.CustomerID = purchase.CustomerID AND purchase.ProductID = product.ProductID; 
 
 -- Query 8
 SELECT SUM(Quantity) AS "Homer's Total Purchases" FROM purchase WHERE purchase.CustomerID IN (SELECT customer.CustomerID FROM customer WHERE customer.FirstName = "Homer"); 
@@ -32,7 +32,7 @@ SELECT customer.FirstName, customer.LastName, SUM(purchase.Quantity) FROM purcha
 SELECT product.Description, product.Quantity FROM product LEFT JOIN purchase ON product.ProductID = purchase.ProductID WHERE purchase.ProductID IS NULL; 
 
 -- Query 11
-SELECT product.Description, product.Quantity FROM product, customer, purchase WHERE product.ProductID NOT IN (SELECT purchase.ProductID FROM purchase, customer WHERE purchase.CustomerID = customer.CustomerID AND customer.FirstName = "Fred" AND customer.LastName = "Flinstone");
+SELECT DISTINCT product.Description, product.Quantity FROM product, customer, purchase WHERE product.ProductID NOT IN (SELECT purchase.ProductID FROM purchase, customer WHERE purchase.CustomerID = customer.CustomerID AND customer.FirstName = "Fred" AND customer.LastName = "Flinstone");
 
 -- Query 12
 SELECT agent.FirstName AS "Agent's First Name", agent.LastName AS "Agent's Last Name", customer.FirstName AS "Agent's Customer's First Name", customer.LastName AS "Agent's Customer's Last Name" FROM agent, customer WHERE customer.AgentID = agent.AgentID AND customer.City = agent.City; 
