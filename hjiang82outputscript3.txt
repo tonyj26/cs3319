@@ -1,0 +1,132 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT Description FROM product
+--------------
+
+Description
+Bike
+Socks
+Baseball
+Elbow pads
+Knee Pads
+Roller Blades
+Helmet
+--------------
+SELECT DISTINCT City FROM customer
+--------------
+
+City
+Boston
+Springfield
+Kypto
+Providence
+--------------
+SELECT * FROM agent ORDER BY City
+--------------
+
+AgentID	FirstName	LastName	City	CommissionPercent
+33	David	Letterman	Bedrock	0.1000000000
+11	Regis	Philbin	Boston	0.3300000000
+22	Courtney	Cox	New York	0.2500000000
+12	Rosie	Cox	Ottawa	0.5000000000
+66	Rosie	ODonnell	Ottawa	0.1000000000
+99	Hugh	Grant	Springfield	0.1600000000
+1	Tony	Jiang	Toronto	0.1500000000
+--------------
+SELECT customer.FirstName, customer.LastName FROM customer WHERE customer.City = "Springfield"
+--------------
+
+FirstName	LastName
+Monty	Burns
+Homer	Simpson
+Sideshow	Bob
+--------------
+SELECT customer.LastName FROM customer WHERE customer.AgentID IN (SELECT agent.AgentID FROM agent WHERE agent.FirstName = "Regis")
+--------------
+
+LastName
+Rubble
+Flinstone
+--------------
+SELECT product.Description FROM product WHERE Description LIKE "%pad%" OR "%Pad%"
+--------------
+
+Description
+Elbow pads
+Knee Pads
+--------------
+SELECT customer.LastName, product.Description, purchase.Quantity FROM customer, product, purchase WHERE customer.CustomerID = purchase.CustomerID AND purchase.ProductID = product.ProductID
+--------------
+
+LastName	Description	Quantity
+Griffens	Elbow pads	19
+Flinstone	Elbow pads	2
+Flinstone	Knee Pads	2
+Simpson	Socks	14
+Simpson	Elbow pads	10
+Simpson	Helmet	20
+Bob	Socks	5
+Bob	Elbow pads	5
+Bob	Knee Pads	5
+Bob	Helmet	5
+--------------
+SELECT SUM(Quantity) AS "Homer's Total Purchases" FROM purchase WHERE purchase.CustomerID IN (SELECT customer.CustomerID FROM customer WHERE customer.FirstName = "Homer")
+--------------
+
+Homer's Total Purchases
+44
+--------------
+SELECT customer.FirstName, customer.LastName, SUM(purchase.Quantity) FROM purchase, customer WHERE purchase.CustomerID = customer.CustomerID GROUP BY customer.FirstName
+--------------
+
+FirstName	LastName	SUM(purchase.Quantity)
+Fred	Flinstone	4
+Homer	Simpson	44
+Peter	Griffens	19
+Sideshow	Bob	20
+--------------
+SELECT product.Description, product.Quantity FROM product LEFT JOIN purchase ON product.ProductID = purchase.ProductID WHERE purchase.ProductID IS NULL
+--------------
+
+Description	Quantity
+Bike	200
+Baseball	180
+Roller Blades	89
+--------------
+SELECT DISTINCT product.Description, product.Quantity FROM product, customer, purchase WHERE product.ProductID NOT IN (SELECT purchase.ProductID FROM purchase, customer WHERE purchase.CustomerID = customer.CustomerID AND customer.FirstName = "Fred" AND customer.LastName = "Flinstone")
+--------------
+
+Description	Quantity
+Bike	200
+Socks	100
+Baseball	180
+Roller Blades	89
+Helmet	30
+--------------
+SELECT agent.FirstName AS "Agent's First Name", agent.LastName AS "Agent's Last Name", customer.FirstName AS "Agent's Customer's First Name", customer.LastName AS "Agent's Customer's Last Name" FROM agent, customer WHERE customer.AgentID = agent.AgentID AND customer.City = agent.City
+--------------
+
+Agent's First Name	Agent's Last Name	Agent's Customer's First Name	Agent's Customer's Last Name
+Regis	Philbin	Barney	Rubble
+Hugh	Grant	Monty	Burns
+Regis	Philbin	Fred	Flinstone
+Hugh	Grant	Homer	Simpson
+--------------
+SELECT SUM(purchase.Quantity) AS "Total Knee Pads Purchased" FROM purchase, product WHERE purchase.ProductID = product.ProductID AND product.Description = "Knee Pads"
+--------------
+
+Total Knee Pads Purchased
+7
+--------------
+SELECT product.Description FROM product, purchase WHERE product.ProductID = purchase.ProductID GROUP BY product.ProductID HAVING COUNT(purchase.CustomerID)>3
+--------------
+
+Description
+Elbow pads
+--------------
+SELECT DISTINCT agent.FirstName, agent.LastName FROM agent, customer, purchase, product WHERE agent.AgentID IN (SELECT customer.AgentID FROM customer WHERE customer.CustomerID IN (SELECT purchase.CustomerID FROM purchase WHERE purchase.ProductID IN (SELECT product.ProductID FROM product WHERE product.ProductID = purchase.ProductID AND product.Description = "Knee Pads")))
+--------------
+
+FirstName	LastName
+Regis	Philbin
+Rosie	ODonnell

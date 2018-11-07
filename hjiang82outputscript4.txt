@@ -1,0 +1,205 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT * FROM product
+--------------
+
+ProductID	Description	CostPerItem	Quantity
+11	Bike	150.00	200
+12	Socks	2.00	100
+15	Baseball	2.50	180
+66	Elbow pads	14.25	120
+78	Knee Pads	12.15	70
+88	Roller Blades	75.00	89
+99	Helmet	29.00	30
+--------------
+SELECT * FROM agent
+--------------
+
+AgentID	FirstName	LastName	City	CommissionPercent
+1	Tony	Jiang	Toronto	0.1500000000
+11	Regis	Philbin	Boston	0.3300000000
+12	Rosie	Cox	Ottawa	0.5000000000
+22	Courtney	Cox	New York	0.2500000000
+33	David	Letterman	Bedrock	0.1000000000
+66	Rosie	ODonnell	Ottawa	0.1000000000
+99	Hugh	Grant	Springfield	0.1600000000
+--------------
+SELECT * FROM customer
+--------------
+
+CustomerID	City	FirstName	LastName	PhoneNumber	AgentID
+10	Boston	Barney	Rubble	777-1234	11
+12	Springfield	Monty	Burns	789-0000	99
+13	Kypto	Wonder	Woman	888-1234	33
+14	Providence	Peter	Griffens	987-4567	99
+15	Boston	Fred	Flinstone	777-2345	11
+21	Springfield	Homer	Simpson	686-8956	99
+31	Springfield	Sideshow	Bob	686-5555	66
+--------------
+SELECT * FROM purchase
+--------------
+
+ProductID	CustomerID	Quantity
+12	21	14
+12	31	5
+66	14	19
+66	15	2
+66	21	10
+66	31	5
+78	15	2
+78	31	5
+99	21	20
+99	31	5
+--------------
+CREATE VIEW view1 AS SELECT customer.FirstName, customer.LastName, product.Description, purchase.Quantity, product.CostPerItem, (product.CostPerItem*purchase.Quantity) AS TotalCost FROM customer, product, purchase WHERE product.ProductID = purchase.ProductID AND customer.CustomerID = purchase.CustomerID ORDER BY customer.LastName
+--------------
+
+--------------
+SELECT * FROM view1
+--------------
+
+FirstName	LastName	Description	Quantity	CostPerItem	TotalCost
+Sideshow	Bob	Elbow pads	5	14.25	71.25
+Sideshow	Bob	Knee Pads	5	12.15	60.75
+Sideshow	Bob	Helmet	5	29.00	145.00
+Sideshow	Bob	Socks	5	2.00	10.00
+Fred	Flinstone	Knee Pads	2	12.15	24.30
+Fred	Flinstone	Elbow pads	2	14.25	28.50
+Peter	Griffens	Elbow pads	19	14.25	270.75
+Homer	Simpson	Socks	14	2.00	28.00
+Homer	Simpson	Elbow pads	10	14.25	142.50
+Homer	Simpson	Helmet	20	29.00	580.00
+--------------
+SELECT * FROM view1 WHERE TotalCost > 100
+--------------
+
+FirstName	LastName	Description	Quantity	CostPerItem	TotalCost
+Sideshow	Bob	Helmet	5	29.00	145.00
+Peter	Griffens	Elbow pads	19	14.25	270.75
+Homer	Simpson	Helmet	20	29.00	580.00
+Homer	Simpson	Elbow pads	10	14.25	142.50
+--------------
+SELECT * FROM product
+--------------
+
+ProductID	Description	CostPerItem	Quantity
+11	Bike	150.00	200
+12	Socks	2.00	100
+15	Baseball	2.50	180
+66	Elbow pads	14.25	120
+78	Knee Pads	12.15	70
+88	Roller Blades	75.00	89
+99	Helmet	29.00	30
+--------------
+SELECT * FROM agent
+--------------
+
+AgentID	FirstName	LastName	City	CommissionPercent
+1	Tony	Jiang	Toronto	0.1500000000
+11	Regis	Philbin	Boston	0.3300000000
+12	Rosie	Cox	Ottawa	0.5000000000
+22	Courtney	Cox	New York	0.2500000000
+33	David	Letterman	Bedrock	0.1000000000
+66	Rosie	ODonnell	Ottawa	0.1000000000
+99	Hugh	Grant	Springfield	0.1600000000
+--------------
+SELECT * FROM customer
+--------------
+
+CustomerID	City	FirstName	LastName	PhoneNumber	AgentID
+10	Boston	Barney	Rubble	777-1234	11
+12	Springfield	Monty	Burns	789-0000	99
+13	Kypto	Wonder	Woman	888-1234	33
+14	Providence	Peter	Griffens	987-4567	99
+15	Boston	Fred	Flinstone	777-2345	11
+21	Springfield	Homer	Simpson	686-8956	99
+31	Springfield	Sideshow	Bob	686-5555	66
+--------------
+SELECT * FROM purchase
+--------------
+
+ProductID	CustomerID	Quantity
+12	21	14
+12	31	5
+66	14	19
+66	15	2
+66	21	10
+66	31	5
+78	15	2
+78	31	5
+99	21	20
+99	31	5
+--------------
+DELETE FROM product WHERE Description = "Baseball"
+--------------
+
+--------------
+SELECT * FROM product
+--------------
+
+ProductID	Description	CostPerItem	Quantity
+11	Bike	150.00	200
+12	Socks	2.00	100
+66	Elbow pads	14.25	120
+78	Knee Pads	12.15	70
+88	Roller Blades	75.00	89
+99	Helmet	29.00	30
+--------------
+SELECT * FROM product WHERE Description = "Baseball"
+--------------
+
+--------------
+SELECT * FROM product
+--------------
+
+ProductID	Description	CostPerItem	Quantity
+11	Bike	150.00	200
+12	Socks	2.00	100
+66	Elbow pads	14.25	120
+78	Knee Pads	12.15	70
+88	Roller Blades	75.00	89
+99	Helmet	29.00	30
+--------------
+SELECT * FROM agent
+------ERROR 1451 (23000) at line 40: Cannot delete or update a parent row: a foreign key constraint fails (`hjiang82assign2db`.`customer`, CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`AgentID`) REFERENCES `agent` (`AgentID`))
+--------
+
+AgentID	FirstName	LastName	City	CommissionPercent
+1	Tony	Jiang	Toronto	0.1500000000
+11	Regis	Philbin	Boston	0.3300000000
+12	Rosie	Cox	Ottawa	0.5000000000
+22	Courtney	Cox	New York	0.2500000000
+33	David	Letterman	Bedrock	0.1000000000
+66	Rosie	ODonnell	Ottawa	0.1000000000
+99	Hugh	Grant	Springfield	0.1600000000
+--------------
+SELECT * FROM customer
+--------------
+
+CustomerID	City	FirstName	LastName	PhoneNumber	AgentID
+10	Boston	Barney	Rubble	777-1234	11
+12	Springfield	Monty	Burns	789-0000	99
+13	Kypto	Wonder	Woman	888-1234	33
+14	Providence	Peter	Griffens	987-4567	99
+15	Boston	Fred	Flinstone	777-2345	11
+21	Springfield	Homer	Simpson	686-8956	99
+31	Springfield	Sideshow	Bob	686-5555	66
+--------------
+SELECT * FROM purchase
+--------------
+
+ProductID	CustomerID	Quantity
+12	21	14
+12	31	5
+66	14	19
+66	15	2
+66	21	10
+66	31	5
+78	15	2
+78	31	5
+99	21	20
+99	31	5
+--------------
+DELETE FROM agent WHERE City = "Springfield"
+--------------
+
